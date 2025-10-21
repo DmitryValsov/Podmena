@@ -8,7 +8,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canRegister' => Features::enabled(Features::registration()),
     ]);
-})->name('home');
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

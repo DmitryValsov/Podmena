@@ -7,14 +7,14 @@ import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Панель управления',
         href: dashboard().url,
     },
 ];
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Панель управления" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
