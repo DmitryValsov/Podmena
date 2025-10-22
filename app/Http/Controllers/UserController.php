@@ -12,4 +12,12 @@ class UserController extends Controller
             //'user' => $user
         ]);
     }
+
+    public function raspisanie(User $user): \Inertia\Response
+    {
+        return Inertia::render('user/Raspisanie', [
+            //'user' => $user
+        ]);
+    }
+
 }

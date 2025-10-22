@@ -5,6 +5,8 @@ use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\TwoFactorAuthenticationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UserController;
+
 
 Route::middleware('auth')->group(function () {
     Route::redirect('settings', '/settings/profile');
@@ -28,4 +30,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('user/show', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
+Route::get('user/show', [UserController::class, 'show'])->name('user.show');
+
+Route::get('user/raspisanie', [UserController::class, 'raspisanie'])->name('user.raspisane');
