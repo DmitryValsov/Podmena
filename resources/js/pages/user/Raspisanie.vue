@@ -615,14 +615,7 @@ function seedRequests(){
         </main>
 
         <!-- Bottom nav (mobile) -->
-        <nav class="md:hidden sticky bottom-0 left-0 right-0 bg-white border-t">
-            <div class="max-w-7xl mx-auto grid grid-cols-4 text-center text-xs py-2">
-                <button class="text-brand-600">📅<div>Расписание</div></button>
-                <button class="opacity-60">🤝<div>Подмены</div></button>
-                <button class="opacity-60">📝<div>Задачи</div></button>
-                <button class="opacity-60">👤<div>Профиль</div></button>
-            </div>
-        </nav>
+
 
         <!-- Swap modal -->
         <div v-if="swap.open" class="fixed inset-0 z-50">
