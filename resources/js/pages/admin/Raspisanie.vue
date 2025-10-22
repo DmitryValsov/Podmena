@@ -254,7 +254,7 @@ function monthDays(year,month){ return new Date(year, month+1, 0).getDate(); }
 
 
     <!-- TOPBAR -->
-    <header class="bg-gradient-to-r from-brand-700 to-indigo-700 ">
+    <header class="from-brand-700 to-indigo-700 ">
         <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="size-15 rounded-xl bg-white/15 grid place-items-center">
