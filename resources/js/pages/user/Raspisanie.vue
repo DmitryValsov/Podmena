@@ -6,7 +6,7 @@ import { computed, onMounted, ref } from 'vue';
 
 
 const page = usePage();
-//const user = page.props.auth.user;
+const user = page.props.auth.user;
 
 /* Mock API */
 const mockApi = {
@@ -46,7 +46,7 @@ function watchValue(src, cb){ let cur=src.value; setInterval(()=>{ if(src.value!
         function shiftMobile(n){ selectMobile(toISO(addDays(fromISO(selectedMobile.value),n))); }
         function goToday(){ selectMobile(toISO(today)); selectedDesktop.value=toISO(today); }
 
-        const hours = ref(['13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00']);
+        const hours = ref(['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']);
         const scope = ref('mine');
 
         const weekStart = ref(startOfWeek(today));
@@ -56,8 +56,8 @@ function watchValue(src, cb){ let cur=src.value; setInterval(()=>{ if(src.value!
                 arr.push({ date:d, key:d.toDateString(), weekday:names[i], label:`${pad(d.getDate())}.${pad(d.getMonth()+1)}`, isToday:toISO(d)===toISO(today) })
             } return arr;
         });
-        const gridStartHour = ref(8);
-        const weekSlots = computed(()=>{ const arr=[]; for(let h=gridStartHour.value; h<=21; h++) arr.push(pad(h)+':00'); return arr; });
+        const gridStartHour = ref(0);
+        const weekSlots = computed(()=>{ const arr=[]; for(let h=gridStartHour.value; h<=23; h++) arr.push(pad(h)+':00'); return arr; });
         const rangeLabel = computed(()=>{ const s=weekStart.value, e=addDays(s,6); return `${pad(s.getDate())}.${pad(s.getMonth()+1)}–${pad(e.getDate())}.${pad(e.getMonth()+1)}.${e.getFullYear()}`; });
         function weekShift(n){ weekStart.value=addDays(weekStart.value,n*7); desktopRoster.value = genWeek(weekStart.value, usersWithMe.value); }
         function startOfWeek(d){ const x=new Date(d); const day=(x.getDay()+6)%7; x.setDate(x.getDate()-day); x.setHours(0,0,0,0); return x; }
@@ -187,14 +187,18 @@ function genDay(iso, users){
         end: `${pad(h2)}:${pad(m2)}`,
         title,
         place: 'пост 1',
-        kind:'12h',
-        part: h1<19?'day':'night',
+        kind:'16h',
+        part: h1<21?'day':'night',
         assigned: Math.floor(Math.random()*6)+2,
         capacity: 8,
         isMine,
         line: color
     });
     return [
+
+       // mk(8,15,20,15,'Перевязки', '#90E696', true),
+
+
         mk(17,15,18,10,'Перевязки', '#90E696', true),
         mk(18,15,19,10,'Приём пациентов', '#80D2F9'),
         mk(19,15,20,10,'Палатный обход', '#FEA8BF'),
@@ -211,10 +215,14 @@ function genWeek(weekStart, users){
             const [sa,ea]=span(day,'08:00','08:00+1');
             out.push({ id:id++, date:iso, kind:'24h', part:null, start_at:sa, end_at:ea, capacity:rint(1,3), place:places[rint(0,places.length-1)], nurses: pick(users,rint(1,3)) });
         }else{
-            const [s1,e1]=span(day,'08:00','20:00');
+            //const [s1,e1]=span(day,'04:00','20:00');
+
+
+
+            const [s1,e1]=span(day,`0${i}:00`,`${i + 12}:00`);
             const [s2,e2]=span(day,'20:00','08:00+1');
             out.push({ id:id++, date:iso, kind:'12h', part:'day', start_at:s1, end_at:e1, capacity:rint(1,3), place:places[rint(0,places.length-1)], nurses: pick(users,rint(1,3)) });
-            out.push({ id:id++, date:iso, kind:'12h', part:'night', start_at:s2, end_at:e2, capacity:rint(1,3), place:places[rint(0,places.length-1)], nurses: pick(users,rint(1,3)) });
+            out.push({ id:id++, date:iso, kind:'16h', part:'night', start_at:s2, end_at:e2, capacity:rint(1,3), place:places[rint(0,places.length-1)], nurses: pick(users,rint(1,3)) });
         }
     }
     return out;
@@ -264,10 +272,12 @@ function seedRequests(){
         <!-- HEADER -->
         <header class="bg-white/95 backdrop-blur border-b sticky top-0 z-30">
             <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+                <a href="/dashboard">
                 <img :src="me.avatar" class="w-10 h-10 rounded-full ring-2 ring-slate-100" alt="">
-                <div>
+                </a>
+                    <div>
                     <div class="text-sm text-slate-500">Личный кабинет</div>
-                    <div class="font-semibold">{{ me.name }} • {{ me.department }}</div>
+                    <div class="font-semibold">{{ user.name }} • {{ me.department }}</div>
                 </div>
                 <div class="ml-auto hidden md:flex items-center gap-2">
                     <button @click="openSwap(null)" class="btn rounded-lg border px-3 py-2 hover:bg-slate-50">Мне нужна подмена</button>

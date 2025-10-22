@@ -20,4 +20,12 @@ class UserController extends Controller
         ]);
     }
 
+
+    public function raspisanie_admin(User $user): \Inertia\Response
+    {
+        return Inertia::render('admin/Raspisanie', [
+            //'user' => $user
+        ]);
+    }
+
 }

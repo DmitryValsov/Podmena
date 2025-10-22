@@ -29,7 +29,8 @@ Route::middleware('auth')->group(function () {
         ->name('two-factor.show');
 });
 
-
-Route::get('user/show', [UserController::class, 'show'])->name('user.show');
-
-Route::get('user/raspisanie', [UserController::class, 'raspisanie'])->name('user.raspisane');
+Route::middleware('auth')->group(function () {
+    Route::get('user/show', [UserController::class, 'show'])->name('user.show');
+    Route::get('user/raspisanie', [UserController::class, 'raspisanie'])->name('user.raspisane');
+    Route::get('admin/raspisanie', [UserController::class, 'raspisanie_admin'])->name('admin.raspisane');
+});

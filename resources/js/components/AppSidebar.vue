@@ -23,6 +23,16 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Распиание админ',
+        href: '/admin/raspisanie/',
+        icon: BookOpen,
+    },
+    {
+        title: 'Распиание медсестра',
+        href: '/user/raspisanie/',
+        icon: Folder,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
