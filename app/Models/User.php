@@ -22,7 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'isAdmin'
+        'isAdmin',
+        'job_id',
+        'department_id',
+        'standart_hours'
     ];
 
     /**
@@ -49,5 +52,10 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }

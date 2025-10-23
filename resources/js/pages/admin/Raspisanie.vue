@@ -97,7 +97,7 @@ function monthDays(year,month){ return new Date(year, month+1, 0).getDate(); }
         }
         function cellColor(row,day){
             const rc=rowCells(row)[day];
-            if(!rc || !rc.type) return '';
+            if(!rc || !rc.type) return 'bg-rose-100';
             if(rc.type==='home_day' || rc.type==='home_night') return 'bg-amber-50 border-amber-200';
             if(restConflict(row,day)) return 'bg-rose-100 border-rose-300';
             return 'bg-mint-100 border-mint-300';
@@ -342,9 +342,12 @@ function monthDays(year,month){ return new Date(year, month+1, 0).getDate(); }
                     <thead>
                     <tr class="bg-slate-50 text-slate-600">
                         <th class="col-sticky left-0 min-w-[280px] text-left px-3 py-2 border-r">Сотрудник / Должность / FTE</th>
-                        <th v-for="d in daysInMonth" :key="'h'+d" class="px-2 py-2 text-center border-b border-l min-w-[68px]">{{ d }}</th>
+
                         <th class="px-3 py-2 text-center border-b border-l min-w-[120px]">Итого (ч)</th>
                         <th class="px-3 py-2 text-center border-b border-l min-w-[140px]">Норма / Баланс</th>
+
+                        <th v-for="d in daysInMonth" :key="'h'+d" class="px-2 py-2 text-center border-b border-l min-w-[68px]">{{ d }}</th>
+
                     </tr>
                     </thead>
 
@@ -358,6 +361,10 @@ function monthDays(year,month){ return new Date(year, month+1, 0).getDate(); }
                                 <div class="text-xs">FTE: <b>{{ row.fte }}</b> • Норма: <b>{{ normFor(row) }} ч</b></div>
                             </div>
                         </td>
+
+                        <td class="text-center border-l"><div class="px-2 py-2 font-semibold">{{ plannedFor(row) }}</div></td>
+                        <td class="text-center border-l"><div class="px-2 py-2"><span :class="balanceFor(row)>=0 ? 'text-emerald-600' : 'text-rose-600'">{{ normFor(row) }} / {{ balanceFor(row) }}</span></div></td>
+
 
                         <!-- cells -->
                         <td v-for="d in daysInMonth"
@@ -377,8 +384,7 @@ function monthDays(year,month){ return new Date(year, month+1, 0).getDate(); }
                         </td>
 
                         <!-- totals -->
-                        <td class="text-center border-l"><div class="px-2 py-2 font-semibold">{{ plannedFor(row) }}</div></td>
-                        <td class="text-center border-l"><div class="px-2 py-2"><span :class="balanceFor(row)>=0 ? 'text-emerald-600' : 'text-rose-600'">{{ normFor(row) }} / {{ balanceFor(row) }}</span></div></td>
+
                     </tr>
                     </tbody>
                 </table>
@@ -499,6 +505,11 @@ function monthDays(year,month){ return new Date(year, month+1, 0).getDate(); }
 .bg-brand-600 { background-color: #4f46e5; }
 .bg-brand-50:hover {background-color: #eef2ff;}
 .bg-brand-50 {color: #eef2ff;}
+.bg-rose-100
+{
+    background-color: #FF007F;
+}
+
 .px-4 py-2 rounded-xl bg-white text-brand-700 font-medium shadow hover:bg-brand-50
 {
     color: #eef2ff !important;
@@ -507,4 +518,6 @@ function monthDays(year,month){ return new Date(year, month+1, 0).getDate(); }
 {
     border-radius: 25px;
 }
+
+
 </style>
